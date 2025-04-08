@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>404 - No encontrado</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #c0392b;
+    }
+    p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #2980b9;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    a:hover {
+      background: #3498db;
+    }
+  </style>
+</head>
+<body>
+  <h1>404 - Página no encontrada</h1>
+  <p><%= mensaje || 'La página que buscás no existe o el superhéroe no fue encontrado.' %></p>
+  <a href="/heroes/api">Volver al dashboard</a>
+</body>
+</html>
