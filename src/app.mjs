@@ -17,15 +17,12 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// Conectar base de datos
 connectDB();
 
-// 🔗 Ruta principal
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-// 🔗 Rutas de superhéroes agrupadas
 app.use('/heroes', SuperHeroRoutes);
 
 // 404
@@ -33,7 +30,7 @@ app.use((req, res) => {
   res.status(404).render('404', { mensaje: "Ruta no encontrada" });
 });
 
-// 🚀 Servidor
+// Servidor
 app.listen(PORT, () => {
   console.log(`✅ Servidor corriendo en http://localhost:${PORT}`);
 });

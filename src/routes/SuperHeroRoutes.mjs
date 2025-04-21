@@ -57,7 +57,7 @@ router.post('/agregar', agregarSuperheroeController);
 router.get('/formulario/editar/:id', mostrarFormularioEditar);
 router.post('/formulario/editar/:id', editarSuperheroeController);
 
-// fliminar superhéroe
+// Eliminar superhéroe
 router.delete('/:id', eliminarSuperheroeYRedirigirController);
 
 export default router;
