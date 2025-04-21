@@ -41,13 +41,11 @@ export const validarSuperheroe = (datos, esEdicion = false) => {
     const nombreRealError = validarTexto(datos.nombreReal, 'El nombre real');
     if (nombreRealError) errores.push(nombreRealError);
 
-    if (datos.edad === undefined || datos.edad === null || datos.edad.toString().trim() === '') {
-      errores.push('La edad es obligatoria.');
-    } else if (isNaN(datos.edad)) {
-      errores.push('La edad debe ser un número.');
+    if (!datos.edad || isNaN(Number(datos.edad))) {
+      errores.push('La edad es obligatoria y debe ser un número válido.');
     } else if (Number(datos.edad) < 0) {
       errores.push('La edad no puede ser negativa.');
-    }
+    }    
 
     const poderesError = validarArrayTexto(datos.poderes, 'Poderes');
     if (poderesError) errores.push(poderesError);
