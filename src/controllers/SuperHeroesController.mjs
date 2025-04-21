@@ -213,7 +213,37 @@ export const editarSuperheroeController = async (req, res) => {
     const datos = req.body;
     normalizarCamposArray(datos);
 
+    // Obtener superhéroe original de la base de datos
+    let original;
+    try {
+        original = await obtenerSuperheroePorId(id);
+        if (!original) {
+            return res.status(404).render('404', { mensaje: 'Superhéroe no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al obtener el superhéroe original:', error);
+        return res.status(500).render('error', { mensaje: 'Error al cargar el superhéroe original' });
+    }
+
+    // Validación
     const errores = validarSuperheroe(datos, true);
+
+    // Comprobación extra: ver si hay algún cambio real
+    const sinCambios =
+        original.nombreSuperheroe === datos.nombreSuperheroe &&
+        original.nombreReal === datos.nombreReal &&
+        String(original.edad) === String(datos.edad) &&
+        original.planetaOrigen === datos.planetaOrigen &&
+        original.debilidad === datos.debilidad &&
+        original.habilidadEspecial === datos.habilidadEspecial &&
+        JSON.stringify(original.poderes) === JSON.stringify(datos.poderes) &&
+        JSON.stringify(original.aliados) === JSON.stringify(datos.aliados) &&
+        JSON.stringify(original.enemigos) === JSON.stringify(datos.enemigos);
+
+    if (sinCambios) {
+        errores.push('No realizaste ningún cambio.');
+    }
+
     if (errores.length > 0) {
         datos._id = id;
         return res.status(400).render('editSuperhero', { datos, errores });
@@ -227,6 +257,7 @@ export const editarSuperheroeController = async (req, res) => {
         res.status(500).render('error', { mensaje: 'Error al actualizar el superhéroe' });
     }
 };
+
 
 export async function eliminarSuperheroeYRedirigirController(req, res) {
     const id = validarParametro(req, res, 'id');
